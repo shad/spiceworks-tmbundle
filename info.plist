@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>mainMenu</key>
+	<dict>
+		<key>items</key>
+		<array>
+			<string>925B1F9E-68B6-4CFB-B4F0-4CE57F055C3A</string>
+			<string>210E654C-BD13-468C-918D-D3A7D5595B3B</string>
+		</array>
+		<key>submenus</key>
+		<dict/>
+	</dict>
+	<key>name</key>
+	<string>Spiceworks</string>
+	<key>ordering</key>
+	<array/>
+	<key>uuid</key>
+	<string>5DC4EBFA-C0B1-42ED-95DD-ABF454E8AC3F</string>
+</dict>
+</plist>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>comment</key>
+	<string>Spiceworks Plugin</string>
+	<key>fileTypes</key>
+	<array>
+		<string>swjs</string>
+	</array>
+	<key>name</key>
+	<string>Spiceworks Plugin</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>object.property.function.prototype.js</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.prototype.js</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.prototype.js</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>Attempt to match foo: function</string>
+			<key>match</key>
+			<string>\b([a-zA-Z_?\.]+\w*):\s+\b(function)?\s*\((.*?)\)</string>
+			<key>name</key>
+			<string>meta.property.function.spiceworks.js</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(SPICEWORKS)\b</string>
+			<key>name</key>
+			<string>support.class.spiceworks.js</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>source.js</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.spiceworks.js</string>
+	<key>uuid</key>
+	<string>2ECC6E61-69F2-4E69-B867-C63183B1F2F9</string>
+</dict>
+</plist>

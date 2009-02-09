@@ -1,7 +1,7 @@
 Spiceworks TextMate bundle
 --------------------
 
-Develop Spiceworks Plugins from an TextMate.
+Develop Spiceworks Plugins with TextMate.
 
 Installation
 ============

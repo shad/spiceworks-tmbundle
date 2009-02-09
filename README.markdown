@@ -3,6 +3,15 @@ Spiceworks TextMate bundle
 
 Develop Spiceworks Plugins with TextMate.
 
+To learn more about Spiceworks and Spiceworks Plugins:
+
+* [Spiceworks Home](http://spiceworks.com)
+* Spiceworks Plugins
+  * [Help Page](http://community.spiceworks.com/help/Plugins)
+  * [API](http://community.spiceworks.com/help/Spiceworks_Plugin_API)
+  * [Tutorials](http://community.spiceworks.com/help/Plugin_Tutorials)
+  * [Plugins available for Install](http://community.spiceworks.com/plugin)
+
 Installation
 ============
 

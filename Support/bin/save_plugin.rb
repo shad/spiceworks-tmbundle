@@ -31,7 +31,12 @@ Net::HTTP.new(url.host, url.port).start do |http|
   login_post = Net::HTTP::Post.new('/account/login')
   login_post.set_form_data( {'user[password]'=>password, 'user[email]'=>user} )
   login_res = http.request(login_post)
-
+  
+  if login_res.is_a?(Net::HTTPSuccess)
+    puts 'Unauthorized user, please check your login and password'
+    break
+  end
+    
   # put the new file up on the server
   save_put = Net::HTTP::Put.new("/settings/plugins/#{guid}")
   save_put.set_form_data({'plugin[content]'=>content})

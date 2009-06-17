@@ -26,10 +26,17 @@ user ||= ENV['SPICEWORKS_USER'] ||'shad@spiceworks.com'
 
 save_res = nil
 
-Net::HTTP.new(url.host, url.port).start do |http| 
+Net::HTTP.new(url.host, url.port).start do |http|
+  login_page_get = Net::HTTP::Get.new('/login')
+  login_page_res = http.request(login_page_get)
+  md = login_page_res.body.match(/input.*name=.*authenticity_token.*value=[\'\"]([^\'\"]+)[\'\"]/)
+  
+  auth_token = md[1]
+    
   # Post to log the user in.
   login_post = Net::HTTP::Post.new('/account/login')
-  login_post.set_form_data( {'user[password]'=>password, 'user[email]'=>user} )
+  login_post.set_form_data( {'user[password]'=>password, 'user[email]'=>user, 'authenticity_token'=>auth_token} )
+  login_post['Cookie'] = login_page_res['Set-Cookie']
   login_res = http.request(login_post)
   
   if login_res.is_a?(Net::HTTPSuccess)
@@ -39,7 +46,7 @@ Net::HTTP.new(url.host, url.port).start do |http|
     
   # put the new file up on the server
   save_put = Net::HTTP::Put.new("/settings/plugins/#{guid}")
-  save_put.set_form_data({'plugin[content]'=>content})
+  save_put.set_form_data({'plugin[content]'=>content, 'authenticity_token'=>auth_token})
   save_put['Cookie'] = login_res['Set-Cookie']
   save_put['Accept'] = 'text/javascript'
   save_res = http.request(save_put)
@@ -53,7 +60,7 @@ Net::HTTP.new(url.host, url.port).start do |http|
     
     # put the new file up on the server
     create_post = Net::HTTP::Post.new("/settings/plugins/import")
-    create_post.set_form_data({'data'=>{:guid=>guid, :name=>name, :description=>description, :version=>version, :content=>content}.to_yaml})
+    create_post.set_form_data({'authenticity_token'=>auth_token, 'data'=>{:guid=>guid, :name=>name, :description=>description, :version=>version, :content=>content}.to_yaml})
     create_post['Cookie'] = login_res['Set-Cookie']
     create_post['Accept'] = 'text/javascript'
     create_res = http.request(create_post)

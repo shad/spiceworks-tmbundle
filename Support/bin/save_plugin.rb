@@ -9,20 +9,15 @@ File.open(ENV['TM_FILEPATH']) do |f|
 end
 guid = content[/\@guid\s+([\w\d-]+)$/, 1]
 
-# use for development
-server_name = content[/\@server\s+(.+)$/, 1]
-user = content[/\@user\s+(.+)$/, 1]
-password = content[/\@password\s+(.+)$/, 1]
-
 name = content[/\@name\s+(.+)$/, 1]
 description = content[/\@description\s+(.+)$/, 1]
 version = content[/\@version\s+(.+)$/, 1]
 
-
-
-url ||= URI.parse(server_name || ENV['SPICEWORKS_SERVER'] || "http://localhost:9675")
-password ||= ENV['SPICEWORKS_PASSWORD']||'okokok'
-user ||= ENV['SPICEWORKS_USER'] ||'shad@spiceworks.com'
+config_file = File.join(File.dirname(__FILE__), 'config.yml')
+config = File.exists?(config_file) ? File.open(config_file) { |f| YAML::load(f) } : {'login' => {}}
+url = URI.parse(config['login']['url'] || 'http://localhost:9675/')
+user = config['login']['user']
+password = config['login']['pass']
 
 save_res = nil
 
@@ -40,7 +35,7 @@ Net::HTTP.new(url.host, url.port).start do |http|
   login_res = http.request(login_post)
   
   if login_res.is_a?(Net::HTTPSuccess)
-    puts 'Unauthorized user, please check your login and password'
+    puts "Unauthorized user, please check your login and password. You might have to setup your config.yml file in this bundle's Support/bin directory"
     break
   end
     

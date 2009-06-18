@@ -1,0 +1,4 @@
+login:
+  url: http://localhost:9675
+  user: test@spiceworks.com
+  pass: okokok

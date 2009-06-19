@@ -27,13 +27,16 @@ Source can be viewed or forked via GitHub: [http://github.com/shad/spiceworks-tm
 Usage
 ==========================
 
-Open your project settings and add the following environment variables.
+1. Open your project directory and add a file 'swconf' (If this file does not exist, it will be created on first attempt to save a spiceworks plugin):
 
-    SPICEWORKS_SERVER   (ex: http://localhost/)
-    SPICEWORKS_USER     (ex: myname@mycompany.com)
-    SPICEWORKS_PASSWORD (ex: flubberdoo)
+    deploy: dev
+    dev:
+      url: http://localhost
+      user: test@spiceworks.com
+      password: mypassword
 
-Create a new plugin in Spiceworks, view source on the plugin and grab the GUID by inspecting the &lt;tr&gt; element of `settings/plugins`.  Insert the `@guid` attribute into the `SPICEWORKS-PLUGIN` comment block like this:
+
+2. Create a new plugin in Spiceworks, view source on the plugin and grab the GUID by inspecting the &lt;tr&gt; element of `settings/plugins`.  Insert the `@guid` attribute into the `SPICEWORKS-PLUGIN` comment block like this:
 
     // ==SPICEWORKS-PLUGIN==
     // @name          My Plugin
@@ -42,29 +45,29 @@ Create a new plugin in Spiceworks, view source on the plugin and grab the GUID b
     // @guid          p-597aa800-9708-012b-81c0-0016353cc494-1233697019
     // ==/SPICEWORKS-PLUGIN==
 
-Now, when you save this plugin using `Option-s` the plugin will also be published out to the server specified in the environment variables.
+3. Create a file in your project directory for your new plugin.  Name it 'whatever-your-plugin-name-is.swjs'.  Make sure that TextMate recognizes it as a spiceworks plugin file (or change the type to be Spiceworks Plugin).  When you save this plugin using `Option-s` the plugin will also be published out to the server specified in 'swconf'.
 
 
-Advanced Usage
-==============================
+Multiple Environments
+=====================
 
-You can also specify the server, user and password directly in the text of the script, but this is only for testing and you should be very carful not to share your plugin with this information included.
+If you set up multiple environments in swconf, you can switch between them by changing the 'deploy' attribute.  For example, say you have 'dev' and 'prod' servers.  Your file might look like this: 
 
-    // ==SPICEWORKS-PLUGIN==
-    // @name          My Plugin
-    // @description   My Plugin Description
-    // @version       0.1
-    // @guid          p-597aa800-9708-012b-81c0-0016353cc494-1233697019
-    //
-    // @server        http://localhost
-    // @user          myuser
-    // @password      mypassword
-    // ==/SPICEWORKS-PLUGIN==
+    deploy: dev
 
+    dev:
+      url: http://localhost
+      user: test@spiceworks.com
+      password: mypassword
 
+    prod:
+      url: http://myprodserver
+      user: foo@bar.com
+      password: mypassword
 
+Then, you just have to change the first line to affect which server you'll deploy to.
 
-Author
+Authors
 =======
-* Shad Reynolds, [shad.reynolds@gmail.com](mailto:shad.reynolds@gmail.com)
-* [twitter/shadr](http://twitter.com/shadr)
+* Shad Reynolds, [shad.reynolds@gmail.com](mailto:shad.reynolds@gmail.com), [twitter/shadr](http://twitter.com/shadr)
+* Justin Perkins

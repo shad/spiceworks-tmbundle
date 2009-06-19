@@ -27,7 +27,7 @@ Source can be viewed or forked via GitHub: [http://github.com/shad/spiceworks-tm
 Usage
 ==========================
 
-1. Open your project directory and add a file 'swconf' (If this file does not exist, it will be created on first attempt to save a spiceworks plugin):
+Open your project directory and add a file 'swconf' (If this file does not exist, it will be created on first attempt to save a spiceworks plugin):
 
     deploy: dev
     dev:
@@ -36,7 +36,7 @@ Usage
       password: mypassword
 
 
-2. Create a new plugin in Spiceworks, view source on the plugin and grab the GUID by inspecting the &lt;tr&gt; element of `settings/plugins`.  Insert the `@guid` attribute into the `SPICEWORKS-PLUGIN` comment block like this:
+Create a new plugin in Spiceworks, view source on the plugin and grab the GUID by inspecting the &lt;tr&gt; element of `settings/plugins`.  Insert the `@guid` attribute into the `SPICEWORKS-PLUGIN` comment block like this:
 
 
     // ==SPICEWORKS-PLUGIN==
@@ -47,7 +47,7 @@ Usage
     // ==/SPICEWORKS-PLUGIN==
 
 
-3. Create a file in your project directory for your new plugin.  Name it 'whatever-your-plugin-name-is.swjs'.  Make sure that TextMate recognizes it as a spiceworks plugin file (or change the type to be Spiceworks Plugin).  When you save this plugin using `Option-s` the plugin will also be published out to the server specified in 'swconf'.
+Create a file in your project directory for your new plugin.  Name it 'whatever-your-plugin-name-is.swjs'.  Make sure that TextMate recognizes it as a spiceworks plugin file (or change the type to be Spiceworks Plugin).  When you save this plugin using `Option-s` the plugin will also be published out to the server specified in 'swconf'.
 
 
 Multiple Environments

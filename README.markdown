@@ -38,12 +38,14 @@ Usage
 
 2. Create a new plugin in Spiceworks, view source on the plugin and grab the GUID by inspecting the &lt;tr&gt; element of `settings/plugins`.  Insert the `@guid` attribute into the `SPICEWORKS-PLUGIN` comment block like this:
 
+
     // ==SPICEWORKS-PLUGIN==
     // @name          My Plugin
     // @description   My Plugin Description
     // @version       0.1
     // @guid          p-597aa800-9708-012b-81c0-0016353cc494-1233697019
     // ==/SPICEWORKS-PLUGIN==
+
 
 3. Create a file in your project directory for your new plugin.  Name it 'whatever-your-plugin-name-is.swjs'.  Make sure that TextMate recognizes it as a spiceworks plugin file (or change the type to be Spiceworks Plugin).  When you save this plugin using `Option-s` the plugin will also be published out to the server specified in 'swconf'.
 

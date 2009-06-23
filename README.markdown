@@ -29,11 +29,17 @@ Usage
 
 Open your project directory and add a file 'swconf' (If this file does not exist, it will be created on first attempt to save a spiceworks plugin):
 
-    deploy: dev
-    dev:
+    --- 
+    environments: 
+    - title: Development
+      user: you@example.com
       url: http://localhost
-      user: test@spiceworks.com
-      password: mypassword
+      pass: password
+
+    - title: Production (Work)
+      user: you@example.com
+      url: http://production-server
+      pass: password
 
 
 Create a new plugin in Spiceworks, view source on the plugin and grab the GUID by inspecting the &lt;tr&gt; element of `settings/plugins`.  Insert the `@guid` attribute into the `SPICEWORKS-PLUGIN` comment block like this:
@@ -50,26 +56,7 @@ Create a new plugin in Spiceworks, view source on the plugin and grab the GUID b
 Create a file in your project directory for your new plugin.  Name it 'whatever-your-plugin-name-is.swjs'.  Make sure that TextMate recognizes it as a spiceworks plugin file (or change the type to be Spiceworks Plugin).  When you save this plugin using `Option-s` the plugin will also be published out to the server specified in 'swconf'.
 
 
-Multiple Environments
-=====================
-
-If you set up multiple environments in swconf, you can switch between them by changing the 'deploy' attribute.  For example, say you have 'dev' and 'prod' servers.  Your file might look like this: 
-
-    deploy: dev
-
-    dev:
-      url: http://localhost
-      user: test@spiceworks.com
-      password: mypassword
-
-    prod:
-      url: http://myprodserver
-      user: foo@bar.com
-      password: mypassword
-
-Then, you just have to change the first line to affect which server you'll deploy to.
-
 Authors
 =======
-* Shad Reynolds, [shad.reynolds@gmail.com](mailto:shad.reynolds@gmail.com), [twitter/shadr](http://twitter.com/shadr)
+* Shad Reynolds [twitter/shadr](http://twitter.com/shadr)
 * Justin Perkins

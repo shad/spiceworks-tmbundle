@@ -58,5 +58,5 @@ Create a file in your project directory for your new plugin.  Name it 'whatever-
 
 Authors
 =======
-* Shad Reynolds [twitter/shadr](http://twitter.com/shadr)
+* Shad Reynolds [twitter/shadr](http://twitter.com/shadr), [Shad (Spiceworks)](http://community.spiceworks.com/profile/show/Shad%20(Spiceworks))
 * Justin Perkins

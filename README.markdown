@@ -36,7 +36,7 @@ Open your project directory and add a file 'swconf' (If this file does not exist
       url: http://localhost
       pass: password
 
-    - title: Production (Work)
+    - title: Production
       user: you@example.com
       url: http://production-server
       pass: password

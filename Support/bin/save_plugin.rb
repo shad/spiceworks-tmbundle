@@ -1,6 +1,12 @@
+require ENV['TM_SUPPORT_PATH'] + '/lib/web_preview.rb'
+require ENV['TM_SUPPORT_PATH'] + '/lib/textmate.rb'
+require ENV['TM_SUPPORT_PATH'] + '/lib/ui.rb'
+
 require 'uri'
 require 'net/http'
 require 'yaml'
+
+require ENV['TM_BUNDLE_SUPPORT'] + '/lib/config.rb'
 
 begin
   
@@ -20,36 +26,20 @@ begin
   version = content[/\@version\s+(.+)$/, 1]
 
 
-  #### CONNECTION INFO #####
-  # first look in project dir
-  config_file = File.join(File.dirname(ENV['TM_FILEPATH']), 'swconf')
+  items = Config.environments
+  items.push({'separator'=>1})
+  items.push({'title'=>'Edit Environments...', 'edit'=>true})
 
-  # then check the bundle dir
-  config_file = File.join(File.dirname(__FILE__), 'config.yml') if !File.exists?(config_file)
-
-
-  # If no config file found, dump a default one into thier project directory!
-  if !File.exists?(config_file)
-    File.open( File.join(File.dirname(ENV['TM_FILEPATH']), 'swconf'), 'w' ) do |out|
-      YAML.dump( {'deploy'=>'dev', 'dev'=>{'user'=>'yourusername', 'pass'=>'yourpassword', 'url'=>'http://localhost'}}, 
-                 out )
-    end
-    puts 'The file "swconf" has been generated in your project directory. Please configure it with your server\'s url/user/pass.'
-
-
-
-
-  else # File Exists, read it in, and deploy
+  deploy_to = TextMate::UI.menu(items)
   
-    config = File.open(config_file) { |f| YAML::load(f) }
-
-    deploy_to = config['deploy'] || 'login'
-
-    url = URI.parse(config[deploy_to]['url'] || 'http://localhost:9675/')
-    user = config[deploy_to]['user']
-    password = config[deploy_to]['pass']
-
-
+  if deploy_to && deploy_to['edit']
+    TextMate.go_to(:file=>Config.file)
+  elsif !deploy_to.nil?
+    
+    url = URI.parse(deploy_to['url'])
+    user = deploy_to['user']
+    password = deploy_to['pass']
+    
     ##### PERFORM THE REQUESTS TO SAVE #####
     save_res = nil
 
@@ -80,7 +70,7 @@ begin
 
       case save_res
       when Net::HTTPSuccess
-        puts "Published Plugin to #{url}"
+        puts "Published Plugin to #{deploy_to['title']}"
       when Net::HTTPRedirection
         puts "redirected? #{save_res.header['location']}"
       when Net::HTTPNotAcceptable
@@ -95,20 +85,21 @@ begin
         case create_res
         when Net::HTTPRedirection
           http.get("/settings/plugins/#{guid}/edit?make_local=true")
-          puts "Imported Plugin to #{url}"
+          puts "Imported Plugin to #{deploy_to['title']}"
         end
 
       else
-        puts "There was a problem saving: #{save_res.inspect}"
+        puts "There was a problem saving to #{deploy_to['title']}: #{save_res.inspect}"
       end
 
     end
-  
   end
 
-
 rescue Errno::ECONNREFUSED => e
-  puts "Connection Refused: Most likely, you have the wrong server address or port."
+  puts "Connection Refused: Most likely, your server is not running or you have the wrong server address or port."
 rescue
   puts "#{$!.message}"
 end
+
+
+
